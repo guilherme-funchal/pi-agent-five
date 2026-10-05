@@ -1,0 +1,26 @@
+{
+  "jobs": [
+    {
+      "id": "xQjSozD1Bv",
+      "name": "Pesquisa G1 Diária",
+      "schedule": "0 8 * * * *",
+      "prompt": "Pesquisar e buscar as principais notícias do portal G1 (g1.globo.com). Retornar os destaques das últimas horas, organizados por categoria principal (Brasil, Mundo, Política, Economia, Tecnologia, etc.). Focar em conteúdo relevante e atualizado.",
+      "enabled": true,
+      "type": "cron",
+      "createdAt": "2026-07-30T01:27:28.969Z",
+      "runCount": 534,
+      "description": "Pesquisa diária de notícias do portal G1 às 08:00",
+      "lastRun": "2026-10-05T16:10:52.797Z",
+      "nextRun": "2026-10-05T17:08:00.000Z",
+      "model": "local-llama/Qwen3.5-9B-Q4_K_M.gguf",
+      "notify": false,
+      "extensions": [
+        "pi-web-access",
+        "pi-subagents",
+        "pi-memory"
+      ],
+      "lastStatus": "success"
+    }
+  ],
+  "version": 1
+}

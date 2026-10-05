@@ -1,0 +1,23 @@
+# Destaques do G1 - Portal Globo.com
+## Nota: Problema de resolução DNS impede acesso direto ao site
+
+### Status Atual da Conexão
+⚠️ **Problema detectado**: Não é possível resolver os domínios g1.globo.com ou globo.com neste ambiente. O problema parece estar relacionado à configuração do DNS local (usando 127.0.0.11 como nameserver).
+
+### Sugestões para Resolução
+1. Verificar se há um servidor DNS externo configurado corretamente
+2. Testar com `nslookup` ou ferramentas de diagnóstico de DNS
+3. Adicionar entradas manuais em /etc/hosts se necessário (apenas para desenvolvimento)
+4. Contatar o administrador do sistema para verificar a configuração de rede
+
+### Domínios que não estão resolvendo:
+- g1.globo.com
+- globo.com
+- www.globo.com
+
+---
+
+**Observação**: Para obter as notícias mais recentes, recomenda-se acessar diretamente:
+- https://g1.globo.com/ (Brasil)
+- https://mundo.g1.globo.com/ (Mundo)
+- Ou usar um navegador web que possa resolver os domínios corretamente

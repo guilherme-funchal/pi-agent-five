@@ -1,0 +1,17 @@
+{
+  "toolDescriptionMode": "compact",
+  "asyncByDefault": false,
+  "forceTopLevelAsync": false,
+  "defaultSessionDir": "/home/pi/.pi/agent/sessions/subagent",
+  "artifactDir": "session",
+  "maxSubagentDepth": 1,
+  "maxSubagentSpawnsPerSession": 30,
+  "globalConcurrencyLimit": 3,
+  "waitTool": {
+    "enabled": true
+  },
+  "intercomBridge": {
+    "mode": "always",
+    "resultDelivery": true
+  }
+}

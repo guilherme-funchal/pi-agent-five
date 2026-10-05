@@ -1,0 +1,8 @@
+{
+  "openaiApiKey": "sk_33b01226b0523b3aabd004dd9eb91ce9e14b8ee76e806ffb0867c419d7d2686c",
+  "tavilyApiKey": "tvly-xxxxxxxxxxxxxxxxx",
+  "workflow": "none",
+  "webSearch": {
+    "enabled": true
+  }
+}

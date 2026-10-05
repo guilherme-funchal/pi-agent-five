@@ -1,0 +1,45 @@
+{
+  "jobs": [
+    {
+      "id": "1-pCPyFc-j",
+      "name": "buscar-noticias-g1",
+      "schedule": "0 45 10 * * *",
+      "prompt": "Busque as principais notícias do portal G1 (g1.globo.com) e apresente um resumo das manchetes mais importantes.",
+      "enabled": true,
+      "type": "cron",
+      "createdAt": "2026-07-29T13:30:40.572Z",
+      "runCount": 52,
+      "lastStatus": "success",
+      "lastRun": "2026-10-05T13:46:54.956Z",
+      "nextRun": "2026-10-06T13:45:00.000Z",
+      "model": "local-llama/Qwen3.5-9B-Q4_K_M.gguf",
+      "notify": false,
+      "extensions": [
+        "pi-web-access",
+        "pi-subagents",
+        "pi-memory"
+      ]
+    },
+    {
+      "id": "wZ0bnBaICl",
+      "name": "previsao-temperatura-porto-alegre",
+      "schedule": "0 0 7 * * *",
+      "prompt": "Busque a previsão do tempo para Porto Alegre e apresente as condições atuais, temperatura máxima/mínima esperada e qualquer alerta meteorológico relevante.",
+      "enabled": true,
+      "type": "cron",
+      "createdAt": "2026-07-29T13:54:31.034Z",
+      "runCount": 54,
+      "model": "local-llama/Qwen3.5-9B-Q4_K_M.gguf",
+      "notify": false,
+      "extensions": [
+        "pi-web-access",
+        "pi-subagents",
+        "pi-memory"
+      ],
+      "lastStatus": "success",
+      "lastRun": "2026-10-05T10:01:34.339Z",
+      "nextRun": "2026-10-06T10:00:00.000Z"
+    }
+  ],
+  "version": 1
+}

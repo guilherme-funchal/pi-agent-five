@@ -1,0 +1,26 @@
+{
+  "uq6kfvBLtg": {
+    "mode": "text",
+    "name": "Busca notícias G1 diário",
+    "agentId": "agent4",
+    "updatedAt": "2026-07-29T13:53:08.659Z"
+  },
+  "zp7nWdjXLK": {
+    "mode": "text",
+    "name": "Previsão do tempo Porto Alegre diário",
+    "agentId": "agent4",
+    "updatedAt": "2026-07-29T13:54:06.275Z"
+  },
+  "Pesquisa": {
+    "mode": "text",
+    "name": "Pesquisa G1 Diária",
+    "agentId": "agent4",
+    "updatedAt": "2026-07-30T01:27:28.972Z"
+  },
+  "3wa53Rp775": {
+    "mode": "text",
+    "name": "Previsão do Tempo Porto Alegre",
+    "agentId": "agent4",
+    "updatedAt": "2026-07-30T01:31:55.714Z"
+  }
+}

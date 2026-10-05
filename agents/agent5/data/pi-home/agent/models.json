@@ -1,0 +1,27 @@
+{
+  "providers": {
+    "local-llama": {
+      "baseUrl": "http://host.docker.internal:8001/v1",
+      "apiKey": "33b01226b0523b3aabd004dd9eb91ce9e14b8ee76e806ffb0867c419d7d2686c",
+      "api": "openai-completions",
+      "models": [
+        {
+          "id": "Qwen3.5-9B-Q4_K_M.gguf",
+          "name": "Qwen3.5-9B-Q4_K_M.gguf",
+          "reasoning": false,
+          "input": [
+            "text"
+          ],
+          "contextWindow": 65536,
+          "maxTokens": 16284,
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "buscar-noticias-g1": {
+    "mode": "text",
+    "name": "buscar-noticias-g1",
+    "agentId": "agent1",
+    "updatedAt": "2026-07-29T13:30:40.576Z"
+  },
+  "previsao-temperatura-porto-alegre": {
+    "mode": "text",
+    "name": "previsao-temperatura-porto-alegre",
+    "agentId": "agent1",
+    "updatedAt": "2026-07-30T02:47:44.357Z"
+  }
+}

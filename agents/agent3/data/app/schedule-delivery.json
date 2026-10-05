@@ -1,0 +1,32 @@
+{
+  "busca_noticias_g1": {
+    "mode": "text",
+    "name": "busca_noticias_g1",
+    "agentId": "agent3",
+    "updatedAt": "2026-07-29T13:53:26.197Z"
+  },
+  "required": {
+    "mode": "text",
+    "name": "previsao_tempo_porto_alegre",
+    "agentId": "agent3",
+    "updatedAt": "2026-07-29T13:54:24.643Z"
+  },
+  "previsao_tempo_porto_alegre": {
+    "mode": "text",
+    "name": "previsao_tempo_porto_alegre",
+    "agentId": "agent3",
+    "updatedAt": "2026-07-29T13:54:55.941Z"
+  },
+  "Pesquisa": {
+    "mode": "text",
+    "name": "Pesquisa diária de notícias G1",
+    "agentId": "agent3",
+    "updatedAt": "2026-07-30T01:29:45.846Z"
+  },
+  "properties": {
+    "mode": "text",
+    "name": "Notícias G1 Diário",
+    "agentId": "agent3",
+    "updatedAt": "2026-07-31T12:48:55.360Z"
+  }
+}

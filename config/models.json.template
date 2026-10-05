@@ -1,0 +1,25 @@
+{
+  "providers": {
+    "__PI_PROVIDER__": {
+      "baseUrl": "__PI_BASE_URL__",
+      "apiKey": "__PI_API_KEY__",
+      "api": "openai-completions",
+      "models": [
+        {
+          "id": "__PI_MODEL__",
+          "name": "__PI_MODEL__",
+          "reasoning": false,
+          "input": ["text"],
+          "contextWindow": __PI_CONTEXT_WINDOW__,
+          "maxTokens": __PI_MAX_TOKENS__,
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          }
+        }
+      ]
+    }
+  }
+}

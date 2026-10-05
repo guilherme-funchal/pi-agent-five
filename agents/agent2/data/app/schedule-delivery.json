@@ -1,0 +1,26 @@
+{
+  "tiRIV8GZw4": {
+    "mode": "text",
+    "name": "Busca notícias G1 diário",
+    "agentId": "agent2",
+    "updatedAt": "2026-07-29T13:53:08.828Z"
+  },
+  "vLirDCGqwb": {
+    "mode": "text",
+    "name": "Previsão do tempo Recife diário",
+    "agentId": "agent2",
+    "updatedAt": "2026-07-29T13:54:18.631Z"
+  },
+  "Pesquisa": {
+    "mode": "text",
+    "name": "Pesquisa notícias G1 diário (07:30)",
+    "agentId": "agent2",
+    "updatedAt": "2026-07-30T01:21:13.106Z"
+  },
+  "8xhPgY7h0C": {
+    "mode": "text",
+    "name": "Previsão do tempo Recife diário (07:00)",
+    "agentId": "agent2",
+    "updatedAt": "2026-07-30T01:24:12.701Z"
+  }
+}

@@ -1,0 +1,13 @@
+Pi Agent Five v2.8.1 — validação
+
+- JavaScript: sintaxe validada
+- TypeScript: sintaxe validada com strip-types
+- Shell: sintaxe validada
+- Docker Compose YAML: estrutura validada
+- Classificador de intenção: 13/13
+- Política de cron: casos 07:30, quinta-feira, dias úteis, intervalo e relativo aprovados
+- Guardião schedule_prompt: autorização, bloqueio sem token e bloqueio de cron deslocado aprovados
+- Modos de resposta: aprovados
+- Utilitário update-job-cron.js: atualização, backup e remoção de nextRun aprovados
+- Tokens Telegram/Discord: sanitizados
+- Build Docker real: não executado neste ambiente

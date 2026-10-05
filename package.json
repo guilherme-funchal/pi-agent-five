@@ -1,0 +1,20 @@
+{
+  "name": "pi-agent-five",
+  "version": "2.8.1",
+  "private": true,
+  "type": "module",
+  "description": "Cinco agentes Pi Docker independentes com Telegram, Discord, áudio, TTS, memória selecionável, RPC supervisionado e agendamentos com validação semântica de cron.",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "check": "node --check src/index.js && node --check src/config.js && node --check src/pi-rpc.js && node --check src/gateway.js && node --check src/notifier.js && node --check src/telegram.js && node --check src/transcriber.js && node --check src/tts.js && node --check src/response-mode.js && node --check src/schedule-delivery-store.js && node --check src/discord.js && node --check src/model-health.js && node --check src/http.js && node --check src/utils.js && node --check scripts/test-discord.js && node --check scripts/patch-schedule-prompt.js && node --check scripts/render-system.js && node --check scripts/migrate-schedules.js && node --check scripts/update-job-cron.js && node --check scripts/configure-memory-backend.js && node --check src/cron-policy.js && node --check src/schedule-intent.js && node --check src/schedule-authorization.js && node --experimental-strip-types --check extensions/schedule-intent-guard.ts && node --check scripts/test-schedule-intent.js && node scripts/test-schedule-intent.js && node --check scripts/test-cron-policy.js && node scripts/test-cron-policy.js && node --check scripts/test-response-mode.js && node scripts/test-response-mode.js && node --experimental-strip-types scripts/test-schedule-guard.js && bash -n whisper/entrypoint.sh && bash -n piper/entrypoint.sh && bash -n scripts/test-whisper.sh && bash -n scripts/test-piper.sh"
+  },
+  "dependencies": {
+    "discord.js": "^14.22.1",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "telegraf": "^4.16.3"
+  }
+}

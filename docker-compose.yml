@@ -1,0 +1,171 @@
+x-pi-agent-common: &pi-agent-common
+  build:
+    context: .
+    args:
+      PI_CODING_AGENT_VERSION: ${PI_CODING_AGENT_VERSION:-latest}
+      PI_WEB_ACCESS_VERSION: ${PI_WEB_ACCESS_VERSION:-0.14.0}
+      PI_MEMORY_VERSION: ${PI_MEMORY_VERSION:-0.4.0}
+  restart: unless-stopped
+  extra_hosts:
+    - "host.docker.internal:host-gateway"
+  healthcheck:
+    test: ["CMD", "/app/scripts/healthcheck.sh"]
+    interval: 30s
+    timeout: 10s
+    retries: 5
+    start_period: 90s
+  networks:
+    - pi-agents
+
+services:
+  whisper:
+    build:
+      context: ./whisper
+      args:
+        WHISPER_CPP_VERSION: ${WHISPER_CPP_VERSION:-v1.9.1}
+    image: pi-whisper-cpp:${WHISPER_CPP_VERSION:-v1.9.1}
+    container_name: pi-whisper
+    hostname: whisper
+    restart: unless-stopped
+    environment:
+      WHISPER_MODEL: ${WHISPER_MODEL:-small}
+      WHISPER_LANGUAGE: ${WHISPER_LANGUAGE:-pt}
+      WHISPER_THREADS: ${WHISPER_THREADS:-8}
+      WHISPER_NO_GPU: ${WHISPER_NO_GPU:-true}
+      WHISPER_MODEL_URL: ${WHISPER_MODEL_URL:-}
+    ports:
+      - "${WHISPER_HTTP_PORT:-8086}:8080"
+    volumes:
+      - ./whisper/models:/models
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "--max-time", "5", "http://127.0.0.1:8080/"]
+      interval: 30s
+      timeout: 10s
+      retries: 20
+      start_period: 600s
+    networks:
+      - pi-agents
+
+
+  piper:
+    build:
+      context: ./piper
+      args:
+        PIPER_TTS_VERSION: ${PIPER_TTS_VERSION:-1.6.0}
+    image: pi-piper-tts:${PIPER_TTS_VERSION:-1.6.0}
+    container_name: pi-piper
+    hostname: piper
+    restart: unless-stopped
+    environment:
+      PIPER_VOICE: ${PIPER_VOICE:-pt_BR-jeff-medium}
+      PIPER_DATA_DIR: /voices
+      PIPER_HOST: 0.0.0.0
+      PIPER_PORT: 5000
+    ports:
+      - "${PIPER_HTTP_PORT:-8087}:5000"
+    volumes:
+      - ./piper/voices:/voices
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "--max-time", "5", "http://127.0.0.1:5000/info"]
+      interval: 30s
+      timeout: 10s
+      retries: 20
+      start_period: 600s
+    networks:
+      - pi-agents
+
+  agent1:
+    <<: *pi-agent-common
+    container_name: pi-agent-agent1
+    hostname: agent1
+    env_file:
+      - ./agents/agent1/.env
+    environment:
+      NODE_ENV: production
+      AGENT_ID: agent1
+      PI_SESSION_NAME: agent1
+    ports:
+      - "${AGENT1_HTTP_PORT:-8081}:8080"
+    volumes:
+      - ./agents/agent1/data/pi-home:/home/pi/.pi
+      - ./agents/agent1/data/app:/data
+      - ./agents/agent1/workspace:/workspace
+      - ./agents/agent1/config:/agent-config:ro
+
+  agent2:
+    <<: *pi-agent-common
+    container_name: pi-agent-agent2
+    hostname: agent2
+    env_file:
+      - ./agents/agent2/.env
+    environment:
+      NODE_ENV: production
+      AGENT_ID: agent2
+      PI_SESSION_NAME: agent2
+    ports:
+      - "${AGENT2_HTTP_PORT:-8082}:8080"
+    volumes:
+      - ./agents/agent2/data/pi-home:/home/pi/.pi
+      - ./agents/agent2/data/app:/data
+      - ./agents/agent2/workspace:/workspace
+      - ./agents/agent2/config:/agent-config:ro
+
+  agent3:
+    <<: *pi-agent-common
+    container_name: pi-agent-agent3
+    hostname: agent3
+    env_file:
+      - ./agents/agent3/.env
+    environment:
+      NODE_ENV: production
+      AGENT_ID: agent3
+      PI_SESSION_NAME: agent3
+    ports:
+      - "${AGENT3_HTTP_PORT:-8083}:8080"
+    volumes:
+      - ./agents/agent3/data/pi-home:/home/pi/.pi
+      - ./agents/agent3/data/app:/data
+      - ./agents/agent3/workspace:/workspace
+      - ./agents/agent3/config:/agent-config:ro
+
+  agent4:
+    <<: *pi-agent-common
+    container_name: pi-agent-agent4
+    hostname: agent4
+    env_file:
+      - ./agents/agent4/.env
+    environment:
+      NODE_ENV: production
+      AGENT_ID: agent4
+      PI_SESSION_NAME: agent4
+    ports:
+      - "${AGENT4_HTTP_PORT:-8084}:8080"
+    volumes:
+      - ./agents/agent4/data/pi-home:/home/pi/.pi
+      - ./agents/agent4/data/app:/data
+      - ./agents/agent4/workspace:/workspace
+      - ./agents/agent4/config:/agent-config:ro
+
+  agent5:
+    <<: *pi-agent-common
+    container_name: pi-agent-agent5
+    hostname: agent5
+    shm_size: "1gb"
+    env_file:
+      - ./agents/agent5/.env
+    environment:
+      NODE_ENV: production
+      AGENT_ID: agent5
+      PI_SESSION_NAME: agent5
+    ports:
+      - "${AGENT5_HTTP_PORT:-8085}:8080"
+    volumes:
+      - ./agents/agent5/data/pi-home:/home/pi/.pi
+      - ./agents/agent5/data/app:/data
+      - ./agents/agent5/workspace:/workspace
+      - ./agents/agent5/config:/agent-config:ro
+
+networks:
+  pi-agents:
+    name: pi-agents
+    driver: bridge

@@ -1,0 +1,42 @@
+{
+  "jobs": [
+    {
+      "id": "oeu6tGoDjx",
+      "name": "Pesquisa notícias G1 diário (07:30)",
+      "schedule": "0 7:30 * * * *",
+      "prompt": "Pesquisar e buscar as principais notícias do portal G1 (g1.globo.com). Retornar os destaques das últimas horas, organizados por categoria principal (Brasil, Mundo, Política, Economia, Tecnologia, etc.). Focar em conteúdo relevante e atualizado.",
+      "enabled": true,
+      "type": "cron",
+      "createdAt": "2026-07-30T01:21:13.103Z",
+      "runCount": 0,
+      "model": "local-llama/Qwen3.5-9B-Q4_K_M.gguf",
+      "notify": false,
+      "extensions": [
+        "pi-web-access",
+        "pi-subagents",
+        "pi-memory"
+      ]
+    },
+    {
+      "id": "8xhPgY7h0C",
+      "name": "Previsão do tempo Recife diário (07:00)",
+      "schedule": "0 7 * * * *",
+      "prompt": "Buscar a previsão do tempo para Recife, Pernambuco. Retornar temperatura atual e máxima/minima esperada, condições do céu (sol, nuvens, chuva), umidade, velocidade do vento e qualquer alerta meteorológico relevante para as próximas 24-72 horas.",
+      "enabled": true,
+      "type": "cron",
+      "createdAt": "2026-07-30T01:24:12.675Z",
+      "runCount": 726,
+      "lastRun": "2026-10-05T16:08:04.431Z",
+      "nextRun": "2026-10-05T17:07:00.000Z",
+      "model": "local-llama/Qwen3.5-9B-Q4_K_M.gguf",
+      "notify": false,
+      "extensions": [
+        "pi-web-access",
+        "pi-subagents",
+        "pi-memory"
+      ],
+      "lastStatus": "success"
+    }
+  ],
+  "version": 1
+}

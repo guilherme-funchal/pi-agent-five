@@ -1,0 +1,12 @@
+{
+  "toolDescriptionMode": "compact",
+  "asyncByDefault": false,
+  "globalConcurrencyLimit": 1,
+  "artifactDir": "project",
+  "missions": {
+    "enabled": true,
+    "directory": ".pi-subagents/missions",
+    "globalIndex": true,
+    "retainTerminal": 200
+  }
+}
