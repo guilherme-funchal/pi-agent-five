@@ -744,3 +744,16 @@ curl -sS http://127.0.0.1:8087/info | jq
 
 Se o Piper falhar, o gateway registra o erro e envia o resultado em texto para não perder a resposta. Respostas maiores que `TTS_MAX_CHARS` são faladas parcialmente; quando `TTS_SEND_TEXT_WITH_AUDIO=true`, o texto completo também é enviado.
 
+### Acesso SSH ao agente
+```bash
+docker exec -it pi-agent-agent1 bash
+
+docker exec -it pi-agent-agent2 bash
+
+docker exec -it pi-agent-agent3 bash
+
+docker exec -it pi-agent-agent4 bash
+
+docker exec -it pi-agent-agent5 bash
+```
+
