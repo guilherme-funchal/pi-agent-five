@@ -7,7 +7,7 @@ const provider = env.PI_PROVIDER || "local-llama";
 const model = env.PI_MODEL || "Qwen3.5-9B-Q4_K_M.gguf";
 const baseUrl = env.PI_BASE_URL || "http://host.docker.internal:8001/v1";
 const apiKey = env.PI_API_KEY || "local";
-const contextWindow = Number.parseInt(env.PI_CONTEXT_WINDOW || "32768", 10);
+const contextWindow = Number.parseInt(env.PI_CONTEXT_WINDOW || "50000", 10);
 const maxTokens = Number.parseInt(env.PI_MAX_TOKENS || "4096", 10);
 
 const config = {

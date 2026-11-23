@@ -2,7 +2,8 @@ x-pi-agent-common: &pi-agent-common
   build:
     context: .
     args:
-      PI_CODING_AGENT_VERSION: ${PI_CODING_AGENT_VERSION:-latest}
+      PI_CODING_AGENT_VERSION: 1.4.0
+#     PI_CODING_AGENT_VERSION: ${PI_CODING_AGENT_VERSION:-latest}
       PI_WEB_ACCESS_VERSION: ${PI_WEB_ACCESS_VERSION:-0.14.0}
       PI_MEMORY_VERSION: ${PI_MEMORY_VERSION:-0.4.0}
   restart: unless-stopped

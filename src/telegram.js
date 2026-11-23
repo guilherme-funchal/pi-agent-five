@@ -18,16 +18,21 @@ const TELEGRAM_COMMANDS = [
   { command: "tts", description: "Mostrar estado da síntese de voz" }
 ];
 
+const RETRY_409_MS = 35_000; // espera o long poll antigo expirar
+const RETRY_ERROR_MS = 10_000; // outros erros de rede/polling
+const MAX_RETRY_MS = 120_000;
+
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 function allowed(config, chatId) {
-  // return config.telegram.allowedChatIds.has(chatId);
   const result = config.telegram.allowedChatIds.has(String(chatId));
-
-  log.info("DEBUG Telegram", {
-    chatId: String(chatId),
-    configuredIds: [...config.telegram.allowedChatIds],
-    allowed: result
-  });
-
+  if (process.env.TELEGRAM_DEBUG === "1") {
+    log.info("DEBUG Telegram", {
+      chatId: String(chatId),
+      configuredIds: [...config.telegram.allowedChatIds],
+      allowed: result
+    });
+  }
   return result;
 }
 
@@ -144,14 +149,7 @@ async function handleAudio({ ctx, bot, config, gateway, notifier }) {
   }
 }
 
-export async function startTelegram(config, gateway, notifier) {
-  if (!config.telegram.token) {
-    log.warn("Telegram desabilitado: TELEGRAM_BOT_TOKEN não configurado");
-    return null;
-  }
-
-  const bot = new Telegraf(config.telegram.token);
-  notifier.attachTelegram(bot);
+function registerHandlers(bot, { config, gateway, notifier }) {
   bot.catch((error) => log.error("Erro no Telegram", { error: error.stack || error.message }));
 
   bot.on("text", async (ctx) => {
@@ -178,22 +176,97 @@ export async function startTelegram(config, gateway, notifier) {
     await dispatchText({ ctx, chatId, text, gateway, notifier });
   });
 
-  bot.on("voice", (ctx) => handleAudio({ ctx, bot, config, gateway, notifier }));
-  bot.on("audio", (ctx) => handleAudio({ ctx, bot, config, gateway, notifier }));
-  bot.on("document", (ctx) => handleAudio({ ctx, bot, config, gateway, notifier }));
+  const audioHandler = (ctx) => handleAudio({ ctx, bot, config, gateway, notifier });
+  bot.on("voice", audioHandler);
+  bot.on("audio", audioHandler);
+  bot.on("document", audioHandler);
+}
 
-  await bot.launch({ dropPendingUpdates: true });
+/**
+ * Mantém o polling vivo em segundo plano. Se cair (409 ou erro de rede),
+ * recria o bot e tenta de novo, sem derrubar o processo.
+ */
+async function runPollingForever(state, { config, gateway, notifier }) {
+  let delay = RETRY_ERROR_MS;
+
+  while (!state.stopped) {
+    const bot = new Telegraf(config.telegram.token);
+    state.bot = bot;
+    notifier.attachTelegram(bot);
+    registerHandlers(bot, { config, gateway, notifier });
+
+    try {
+      // Só resolve quando o bot é parado (stop). Erros caem no catch.
+      await bot.launch({ dropPendingUpdates: true });
+      if (state.stopped) return;
+      log.warn("Polling Telegram terminou sem erro; reiniciando");
+    } catch (error) {
+      if (state.stopped) return;
+
+      if (error?.response?.error_code === 409) {
+        log.error("Telegram 409: outro getUpdates está usando este token", {
+          agent: process.env.AGENT_ID,
+          pid: process.pid,
+          retryInMs: RETRY_409_MS
+        });
+        delay = RETRY_409_MS;
+      } else {
+        log.error("Polling Telegram caiu", {
+          agent: process.env.AGENT_ID,
+          error: error.stack || error.message,
+          retryInMs: delay
+        });
+      }
+    }
+
+    try { bot.stop("restart"); } catch { /* já parado */ }
+    await sleep(delay);
+    delay = Math.min(delay * 2, MAX_RETRY_MS);
+  }
+}
+
+export async function startTelegram(config, gateway, notifier) {
+  if (!config.telegram.token) {
+    log.warn("Telegram desabilitado: TELEGRAM_BOT_TOKEN não configurado");
+    return null;
+  }
+
+  // Valida o token antes de iniciar o polling e identifica o bot nos logs.
+  const probe = new Telegraf(config.telegram.token);
+  let me;
   try {
-    await bot.telegram.setMyCommands(TELEGRAM_COMMANDS);
+    me = await probe.telegram.getMe();
+  } catch (error) {
+    log.error("Token do Telegram inválido ou API inacessível", { error: error.message });
+    return null;
+  }
+
+  const state = { stopped: false, bot: null };
+
+  // Polling em segundo plano: NÃO usar await aqui.
+  runPollingForever(state, { config, gateway, notifier }).catch((error) => {
+    log.error("Loop do Telegram encerrou inesperadamente", { error: error.stack || error.message });
+  });
+
+  try {
+    await probe.telegram.setMyCommands(TELEGRAM_COMMANDS);
   } catch (error) {
     log.warn("Não foi possível registrar o menu de comandos Telegram", { error: error.message });
   }
 
-  const me = await bot.telegram.getMe();
   log.info("Telegram conectado", {
+    agent: process.env.AGENT_ID,
     username: me.username,
+    botId: me.id,
     audioEnabled: config.telegram.audioEnabled,
     whisperEndpoint: `${config.speech.baseUrl}${config.speech.inferencePath}`
   });
-  return bot;
+
+  return {
+    get bot() { return state.bot; },
+    stop(reason = "shutdown") {
+      state.stopped = true;
+      try { state.bot?.stop(reason); } catch { /* ignore */ }
+    }
+  };
 }
